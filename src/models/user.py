@@ -17,5 +17,5 @@ class UserSchema(ma.Schema):
 
 # this is for one user
 user_schema = UserSchema(exclude=['password'])
-# many = list of users
+# this is for list of users
 users_schema = UserSchema(many=True, exclude=['password'])
