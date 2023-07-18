@@ -1,7 +1,10 @@
 from flask import Blueprint
 from init import db, bcrypt
+from datetime import date
 from models.user import User
 from models.content import Content
+from models.review import Review
+
 
 db_commands = Blueprint('db', __name__)
 
@@ -35,7 +38,7 @@ def seed_db():
 
     db.session.add_all(users)
 
-# TO DO: input for author and category
+# add author and category
     content = [
         Content(
             title='Content 1',
@@ -68,9 +71,45 @@ def seed_db():
     ]
 
     db.session.add_all(content)
+
+    reviews = [
+            Review(
+                content='Review 1',
+                rating='5',
+                comment='Comment 1',
+                created=date.today(),
+                user=users[0], 
+            ),
+            Review(
+                content='Review 2',
+                rating='4',
+                comment='Comment 2',
+                created=date.today(),
+                user=users[0], 
+            ),
+            Review(
+                content='Review 3',
+                rating='2',
+                comment='Comment 3',
+                created=date.today(),
+                user=users[0], 
+            ),
+            Review(
+                content='Review 4',
+                rating='4',
+                comment='Comment 4',
+                created=date.today(),
+                user=users[0], 
+            ),
+    ]
+
+    db.session.add_all(reviews)
+
+# authors
+
+# category
+
     db.session.commit()
-
-    # insert others
-
+    
     print("Tables seeded")
 

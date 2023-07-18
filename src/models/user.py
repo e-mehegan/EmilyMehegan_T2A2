@@ -12,6 +12,8 @@ class User(db.Model):
     password = db.Column(db.String, nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
 
+    reviews = db.relationship('Reviews', back_populates='user', cascade='all, delete')
+
 class UserSchema(ma.Schema):
     class Meta:
         fields = ('id', 'first_name', 'last_name', 'year_born', 'email', 'password', 'is_admin')
