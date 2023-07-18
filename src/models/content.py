@@ -8,7 +8,7 @@ class Content(db.Model):
     title = db.Column(db.String)
     genre = db.Column(db.String)
     description = db.Column(db.Text)
-    published = db.Column(db.Date)
+    published = db.Column(db.String)
     publisher = db.Column(db.String)
 
 
@@ -26,4 +26,4 @@ class ContentSchema(ma.Schema):
         ordered = True
 
 content_schema = ContentSchema()
-content_schema = ContentSchema(many=True)
+contents_schema = ContentSchema(many=True)
