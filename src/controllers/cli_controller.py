@@ -4,6 +4,7 @@ from datetime import date
 from models.user import User
 from models.content import Content
 from models.review import Review
+from models.category import Category
 
 
 db_commands = Blueprint('db', __name__)
@@ -75,6 +76,7 @@ def seed_db():
     reviews = [
             Review(
                 content='Review 1',
+                category=categories[1],
                 rating='5',
                 comment='Comment 1',
                 created=date.today(),
@@ -82,6 +84,7 @@ def seed_db():
             ),
             Review(
                 content='Review 2',
+                category=categories[2],
                 rating='4',
                 comment='Comment 2',
                 created=date.today(),
@@ -89,6 +92,7 @@ def seed_db():
             ),
             Review(
                 content='Review 3',
+                category=categories[4],
                 rating='2',
                 comment='Comment 3',
                 created=date.today(),
@@ -96,6 +100,7 @@ def seed_db():
             ),
             Review(
                 content='Review 4',
+                category=categories[3],
                 rating='4',
                 comment='Comment 4',
                 created=date.today(),
@@ -105,9 +110,41 @@ def seed_db():
 
     db.session.add_all(reviews)
 
-# authors
+    categories = [
+        Category(
+        category='Novel'
+        ),
+        Category(
+        category='Short Story'
+        ),
+        Category(
+        category='Manga'
+        ),
+        Category(
+        category='Thesis'
+        ),
+        Category(
+        category='Poetry'
+        ),
+        Category(
+        category='Essay'
+        ),
+        Category(
+        category='Autobiography'
+        ),
+        Category(
+        category='Article'
+        ),
+        Category(
+        category='Biography'
+        ),
+        Category(
+        category='Picture Book'
+        ),
+    ]
 
-# category
+    db.session.add_all(categories)
+
 
     db.session.commit()
     
