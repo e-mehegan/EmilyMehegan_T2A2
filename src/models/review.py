@@ -25,5 +25,5 @@ class ReviewSchema(ma.Schema):
         fields = ('id', 'content', 'rating', 'comment', 'created', 'user')
 
 review_schema = ReviewSchema()
-reviewss_schema = ReviewSchema(many=True)
+reviews_schema = ReviewSchema(many=True)
 
