@@ -22,99 +22,6 @@ def drop_db():
 
 @db_commands.cli.command('seed')
 def seed_db():
-    users = [
-        User(
-            first_name='Admin',
-            last_name='Main',
-            email='admin@main.com',
-            password=bcrypt.generate_password_hash('admin1').decode('utf-8'),
-            is_admin=True
-        ),
-        User(
-            first_name='User1',
-            last_name='One',
-            email='user1@email.com',
-            password=bcrypt.generate_password_hash('user1').decode('utf-8')
-        ),
-    ]
-
-    db.session.add_all(users)
-
-# add author and category
-    content = [
-        Content(
-            title='Content 1',
-            category=categories[1],
-            author=authors[2],
-            genre='Genre 1',
-            description='Content 1 description',
-            published='2009',
-            publisher='Publisher 1', 
-        ),
-         Content(
-            title='Content 2',
-            category=categories[3],
-            author=authors[2],
-            genre='Genre 2',
-            description='Content 2 description',
-            published='2010',
-            publisher='Publisher 2', 
-        ),
-         Content(
-            title='Content 3',
-            category=categories[4],
-            author=authors[2],
-            genre='Genre 3',
-            description='Content 3 description',
-            published='2011',
-            publisher='Publisher 3', 
-        ),
-         Content(
-            title='Content 4',
-            category=categories[6],
-            author=authors[2],
-            genre='Genre 4',
-            description='Content 4 description',
-            published='2012',
-            publisher='Publisher 4', 
-        ),
-    ]
-
-    db.session.add_all(content)
-
-    reviews = [
-            Review(
-                content='Review 1',
-                rating='5',
-                comment='Comment 1',
-                created=date.today(),
-                user=users[0], 
-            ),
-            Review(
-                content='Review 2',
-                rating='4',
-                comment='Comment 2',
-                created=date.today(),
-                user=users[0], 
-            ),
-            Review(
-                content='Review 3',
-                rating='2',
-                comment='Comment 3',
-                created=date.today(),
-                user=users[0], 
-            ),
-            Review(
-                content='Review 4',
-                rating='4',
-                comment='Comment 4',
-                created=date.today(),
-                user=users[0], 
-            ),
-    ]
-
-    db.session.add_all(reviews)
-
     categories = [
         Category(
         category='Novel'
@@ -147,11 +54,12 @@ def seed_db():
         category='Picture Book'
         ),
         Category(
-        categories='Comic'
+        category='Comic'
         ),
     ]
 
     db.session.add_all(categories)
+    db.session.commit()
 
     authors = [
             Author(
@@ -181,6 +89,101 @@ def seed_db():
     ]
 
     db.session.add_all(authors)
+    db.session.commit()
+
+    users = [
+        User(
+            first_name='Admin',
+            last_name='Main',
+            email='admin@main.com',
+            password=bcrypt.generate_password_hash('admin1').decode('utf-8'),
+            is_admin=True
+        ),
+        User(
+            first_name='User1',
+            last_name='One',
+            email='user1@email.com',
+            password=bcrypt.generate_password_hash('user1').decode('utf-8')
+        ),
+    ]
+
+    db.session.add_all(users)
+    db.session.commit()
+
+    content = [
+        Content(
+            title='Content 1',
+            category=categories[0],
+            author=authors[0], 
+            genre='Genre 1',
+            description='Content 1 description',
+            published='2009',
+            publisher='Publisher 1'
+        ),
+         Content(
+            title='Content 2',
+            category=categories[1],
+            author=authors[1],
+            genre='Genre 2',
+            description='Content 2 description',
+            published='2010',
+            publisher='Publisher 2', 
+        ),
+         Content(
+            title='Content 3',
+            category=categories[2],
+            author=authors[2],
+            genre='Genre 3',
+            description='Content 3 description',
+            published='2011',
+            publisher='Publisher 3', 
+        ),
+         Content(
+            title='Content 4',
+            category=categories[3],
+            author=authors[3],
+            genre='Genre 4',
+            description='Content 4 description',
+            published='2012',
+            publisher='Publisher 4', 
+        ),
+    ]
+
+    db.session.add_all(content)
+    db.session.commit()
+
+    reviews = [
+            Review(
+                content=content[0],
+                rating='5',
+                comment='Comment 1',
+                created=date.today(),
+                user=users[0],
+            ),
+            Review(
+                content=content[1],
+                rating='4',
+                comment='Comment 2',
+                created=date.today(),
+                user=users[1], 
+            ),
+            Review(
+                content=content[2],
+                rating='2',
+                comment='Comment 3',
+                created=date.today(),
+                user=users[0], 
+            ),
+            Review(
+                content=content[3],
+                rating='4',
+                comment='Comment 4',
+                created=date.today(),
+                user=users[1], 
+            ),
+    ]
+
+    db.session.add_all(reviews)
     db.session.commit()
     
     print("Tables seeded")

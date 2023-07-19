@@ -12,7 +12,7 @@ class User(db.Model):
     password = db.Column(db.String, nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
 
-    reviews = db.relationship('Reviews', back_populates='user', cascade='all, delete')
+    reviews = db.relationship('Review', back_populates='user', cascade='all, delete')
 
 class UserSchema(ma.Schema):
     reviews = fields.List(fields.Nested('ReviewSchema', exclude=['user']))

@@ -7,7 +7,7 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     category = db.Column(db.String)
 
-    content = db.relationship('Content', back_populates=('category'))
+    content = db.relationship('Content', back_populates='category')
 
 class CategorySchema(ma.Schema):
     class Meta:
