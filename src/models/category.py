@@ -11,7 +11,7 @@ class Category(db.Model):
 
 class CategorySchema(ma.Schema):
     class Meta:
-        fields = ('id', 'category')
+        fields = ('id', 'category', 'content')
 
 category_schema = CategorySchema()
 categorys_schema = CategorySchema(many=True)

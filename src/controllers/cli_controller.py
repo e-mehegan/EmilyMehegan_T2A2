@@ -5,6 +5,7 @@ from models.user import User
 from models.content import Content
 from models.review import Review
 from models.category import Category
+from models.author import Author
 
 
 db_commands = Blueprint('db', __name__)
@@ -43,6 +44,8 @@ def seed_db():
     content = [
         Content(
             title='Content 1',
+            category=categories[1],
+            author=authors[2],
             genre='Genre 1',
             description='Content 1 description',
             published='2009',
@@ -50,6 +53,8 @@ def seed_db():
         ),
          Content(
             title='Content 2',
+            category=categories[3],
+            author=authors[2],
             genre='Genre 2',
             description='Content 2 description',
             published='2010',
@@ -57,6 +62,8 @@ def seed_db():
         ),
          Content(
             title='Content 3',
+            category=categories[4],
+            author=authors[2],
             genre='Genre 3',
             description='Content 3 description',
             published='2011',
@@ -64,6 +71,8 @@ def seed_db():
         ),
          Content(
             title='Content 4',
+            category=categories[6],
+            author=authors[2],
             genre='Genre 4',
             description='Content 4 description',
             published='2012',
@@ -76,7 +85,6 @@ def seed_db():
     reviews = [
             Review(
                 content='Review 1',
-                category=categories[1],
                 rating='5',
                 comment='Comment 1',
                 created=date.today(),
@@ -84,7 +92,6 @@ def seed_db():
             ),
             Review(
                 content='Review 2',
-                category=categories[2],
                 rating='4',
                 comment='Comment 2',
                 created=date.today(),
@@ -92,7 +99,6 @@ def seed_db():
             ),
             Review(
                 content='Review 3',
-                category=categories[4],
                 rating='2',
                 comment='Comment 3',
                 created=date.today(),
@@ -100,7 +106,6 @@ def seed_db():
             ),
             Review(
                 content='Review 4',
-                category=categories[3],
                 rating='4',
                 comment='Comment 4',
                 created=date.today(),
@@ -141,11 +146,41 @@ def seed_db():
         Category(
         category='Picture Book'
         ),
+        Category(
+        categories='Comic'
+        ),
     ]
 
     db.session.add_all(categories)
 
+    authors = [
+            Author(
+            author='author 1'
+            ),
+            Author(
+            author='author 2'
+            ),
+            Author(
+            author='author 3'
+            ),
+            Author(
+            author='author 4'
+            ),
+            Author(
+            author='author 5'
+            ),
+            Author(
+            author='author 6'
+            ),
+            Author(
+            author='author 7'
+            ),
+            Author(
+            author='author 8'
+            ),
+    ]
 
+    db.session.add_all(authors)
     db.session.commit()
     
     print("Tables seeded")
