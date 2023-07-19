@@ -24,7 +24,7 @@ class ContentSchema(ma.Schema):
     category = fields.Nested('CategorySchema')
 
     class Meta:
-        fields = ('id', 'author', 'category,' 'title', 'genre', 'description', 'published', 'publisher', 'reviews')
+        fields = ('id', 'title', 'genre', 'description', 'published', 'publisher')
         ordered = True
 
 content_schema = ContentSchema()

@@ -17,12 +17,12 @@ class Review(db.Model):
     content = db.relationship('Content', back_populates='reviews')
 
 class ReviewSchema(ma.Schema):
-    user = fields.Nested('UserSchema', only=['name', 'email'])
-    content = fields.List(fields.Nested('ContentSchema'))
-    
+    user = fields.Nested('UserSchema', only=['first_name', 'last_name'])
+    content = fields.Nested('ContentSchema')
 
     class Meta:
         fields = ('id', 'content', 'rating', 'comment', 'created', 'user')
+
 
 review_schema = ReviewSchema()
 reviews_schema = ReviewSchema(many=True)
