@@ -10,6 +10,7 @@ class Author(db.Model):
     content = db.relationship('Content', back_populates=('author'))
 
 class AuthorSchema(ma.Schema):
+    content = fields.Nested('ContentSchema', many=True) 
     class Meta:
         fields = ('id', 'author', 'content')
 
