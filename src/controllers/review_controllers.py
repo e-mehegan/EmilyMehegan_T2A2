@@ -2,6 +2,7 @@ from flask import Blueprint, request
 from init import db, bcrypt
 from datetime import date
 from models.review import Review, review_schema, reviews_schema
+from models.content import Content
 from flask_jwt_extended import get_jwt_identity, jwt_required
 
 reviews_bp = Blueprint('reviews', __name__, url_prefix='/reviews')
@@ -21,21 +22,31 @@ def get_one_review(id):
     else:
         return {'Error': f'Review not found with the id {id}'}, 404
 
-# check with the content_id
+
 @reviews_bp.route('/', methods=['POST'])
 @jwt_required()
 def create_review():
     body_data = request.get_json()
+    content_id = body_data.get('content_id')
+    if not content_id:
+        return {'Error': 'content_id must be provided when creating a review.'}, 400
+
+    content = Content.query.get(content_id)
+    if not content:
+        return {'Error': f'Content with id {content_id} does not exist.'}, 404
+
     review = Review(
-        content_id=get_jwt_identity(),
+        content_id=content_id,
         rating=body_data.get('rating'),
         comment=body_data.get('comment'),
         created=date.today(),
         user_id=get_jwt_identity()
     )
+
     db.session.add(review)
     db.session.commit()
     return review_schema.dump(review), 201
+
 
 @reviews_bp.route('/<int:id>', methods=['DELETE'])
 @jwt_required()
