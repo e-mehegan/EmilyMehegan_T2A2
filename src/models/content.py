@@ -11,16 +11,15 @@ class Content(db.Model):
     published = db.Column(db.String)
     publisher = db.Column(db.String)
 
+    author_id = db.Column(db.Integer, db.ForeignKey('authors.id'), nullable=False)
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
 
-    author_id = db.Column(db.Integer, db.ForeignKey('author.id'), nullable=False)
-    category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
-
-    review = db.relationship('Review', back_populates='content', cascade='all, delete')
+    reviews = db.relationship('Review', back_populates='content', cascade='all, delete')
     author = db.relationship('Author', back_populates='content')
-    category = db.relationship('category', back_populates='content')
+    category = db.relationship('Category', back_populates='content')
 
 class ContentSchema(ma.Schema):
-    review = fields.Nested('ReviewSchema', exclude=['id'])
+    reviews = fields.Nested('ReviewSchema', exclude=['id'])
     author = fields.Nested('AuthorSchema')
     category = fields.Nested('CategorySchema')
 
