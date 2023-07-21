@@ -123,7 +123,7 @@ def delete_one_review(id):
     """
     Route for deleting a single review by ID.
 
-    This route allows authorized users to delete a review based on its ID.
+    This route allows authorized users (the owners of the review) to delete a review based on its ID.
 
     Parameters:
         id (int): The ID of the review to be deleted.
@@ -135,23 +135,23 @@ def delete_one_review(id):
         An error message as a JSON object with HTTP status code 404 (Not Found) 
         if the review with the specified ID does not exist.
 
-        An error message as a JSON object with HTTP status code 401 (Unauthorized) 
+        An error message as a JSON object with HTTP status code 403 (Forbidden) 
         if the user making the request is not the creator of the review.
     """
-    current_user_id = authorize_user()
-
-    stmt = db.select(Review).filter_by(id=id)
-    review = db.session.scalar(stmt)
+    current_user_id = get_jwt_identity()
+    review = Review.query.filter_by(id=id).first()
 
     # If the review exists
     if review:
-        # Check if the current user is the creator of the review
-        if current_user_id == review.user_id:
+        # Check if the current user is the owner of the review, if true delete
+        if str(review.user_id) == str(current_user_id):
             db.session.delete(review)
             db.session.commit()
             return {'Message': f'Review has been deleted successfully'}
+        # Return error message if current user is not owner
         else:
-            return {'Error': 'Unauthorized to delete this review'}, 401
+            return {'Error': 'You must be the owner of this review to delete it.'}, 403
+        # Return error message if review id is not found
     else:
         return {'Error': f'Review not found with id {id}'}, 404
 
