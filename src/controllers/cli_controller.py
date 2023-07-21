@@ -1,6 +1,6 @@
 from flask import Blueprint
 from init import db, bcrypt
-from datetime import date
+from datetime import date, datetime
 from models.user import User
 from models.content import Content
 from models.review import Review
@@ -117,7 +117,7 @@ def seed_db():
             author=authors[0], 
             genre='Genre 1',
             description='Content 1 description',
-            published='2009',
+            published=date(2009, 1, 1),
             publisher='Publisher 1'
         ),
          Content(
@@ -126,7 +126,7 @@ def seed_db():
             author=authors[1],
             genre='Genre 2',
             description='Content 2 description',
-            published='2010',
+            published=date(2010, 1, 1),
             publisher='Publisher 2', 
         ),
          Content(
@@ -135,7 +135,7 @@ def seed_db():
             author=authors[2],
             genre='Genre 3',
             description='Content 3 description',
-            published='2011',
+            published=date(2011, 1, 1),
             publisher='Publisher 3', 
         ),
          Content(
@@ -144,7 +144,7 @@ def seed_db():
             author=authors[3],
             genre='Genre 4',
             description='Content 4 description',
-            published='2012',
+            published=date(2012, 1, 1),
             publisher='Publisher 4', 
         ),
     ]
@@ -187,4 +187,3 @@ def seed_db():
     db.session.commit()
     
     print("Tables seeded")
-

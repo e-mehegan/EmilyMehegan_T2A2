@@ -1,7 +1,6 @@
 from init import db, ma
 from marshmallow import fields
 
-
 class Content(db.Model):
     __tablename__ = "content"
 
@@ -9,7 +8,7 @@ class Content(db.Model):
     title = db.Column(db.String)
     genre = db.Column(db.String)
     description = db.Column(db.Text)
-    published = db.Column(db.String)
+    published = db.Column(db.Date)
     publisher = db.Column(db.String)
 
     author_id = db.Column(db.Integer, db.ForeignKey('authors.id'), nullable=False)
@@ -20,12 +19,12 @@ class Content(db.Model):
     category = db.relationship('Category', back_populates='content')
 
 class ContentSchema(ma.Schema):
-    reviews = fields.List(fields.Nested('ReviewSchema'), exclude=['content'])
+    reviews = fields.Nested('ReviewSchema', exclude=['id'])
     author = fields.Nested('AuthorSchema')
     category = fields.Nested('CategorySchema')
 
     class Meta:
-        fields = ('id', 'title', 'genre', 'description', 'published', 'publisher', 'reviews')
+        fields = ('id', 'title', 'genre', 'description', 'published', 'publisher')
         ordered = True
 
 content_schema = ContentSchema()

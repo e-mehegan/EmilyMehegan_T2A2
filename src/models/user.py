@@ -19,7 +19,6 @@ class UserSchema(ma.Schema):
 
     class Meta:
         fields = ('id', 'first_name', 'last_name', 'year_born', 'email', 'password', 'is_admin', 'reviews')
-        ordereed = True
 
 # this is for one user
 user_schema = UserSchema(exclude=['password'])
