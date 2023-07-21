@@ -236,7 +236,7 @@ def update_one_content(id):
         content.author = author
 
         db.session.commit()
-        # Return the updated content as JSON with HTTP status code 200 (OK), if id doesn't exisit return error
+        # Return the updated content as JSON with HTTP status code 200 (OK), if id doesn't exist return error
         return content_schema.dump(content)
     else:
         return {'Error': f'Content with id {id} does not exist.'}, 404

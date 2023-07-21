@@ -5,6 +5,23 @@ from datetime import date
 from models.review import Review, review_schema, reviews_schema
 from models.content import Content
 from flask_jwt_extended import get_jwt_identity, jwt_required
+from models.user import User
+
+def authorize_user():
+    """
+    Check if the current user is authorized.
+
+    This function checks if the current user, identified by the JWT token,
+    is authorized to perform a specific action. It retrieves the user's ID from the JWT token.
+
+    Parameters:
+        None.
+
+    Returns:
+        int: The user's ID if the user is authorized, or None if not authorized.
+    """
+    user_id = get_jwt_identity()
+    return user_id
 
 
 # Blueprint for reviews routes
@@ -100,7 +117,6 @@ def create_review():
     return review_schema.dump(review), 201
 
 
-# EDIT THIS ROUTE SO ADMIN AND USER CAN ONLY DELETE REVIEW
 @reviews_bp.route('/<int:id>', methods=['DELETE'])
 @jwt_required()
 def delete_one_review(id):
@@ -118,17 +134,27 @@ def delete_one_review(id):
 
         An error message as a JSON object with HTTP status code 404 (Not Found) 
         if the review with the specified ID does not exist.
+
+        An error message as a JSON object with HTTP status code 401 (Unauthorized) 
+        if the user making the request is not the creator of the review.
     """
+    current_user_id = authorize_user()
+
     stmt = db.select(Review).filter_by(id=id)
     review = db.session.scalar(stmt)
- # If the review exists, delete it from the database and commit the changes, if not retuen error 
+
+    # If the review exists
     if review:
-        db.session.delete(review)
-        db.session.commit()
-        return {'Message': f'Review has been deleted successfully'}
+        # Check if the current user is the creator of the review
+        if current_user_id == review.user_id:
+            db.session.delete(review)
+            db.session.commit()
+            return {'Message': f'Review has been deleted successfully'}
+        else:
+            return {'Error': 'Unauthorized to delete this review'}, 401
     else:
         return {'Error': f'Review not found with id {id}'}, 404
-    
+
 
 @reviews_bp.route('/<int:id>', methods=['PUT', 'PATCH'])
 @jwt_required()
