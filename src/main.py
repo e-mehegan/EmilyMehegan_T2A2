@@ -8,6 +8,7 @@ from controllers.review_controllers import reviews_bp
 from controllers.category_controller import category_bp
 from controllers.author_controller import author_bp
 from marshmallow.exceptions import ValidationError
+from sqlalchemy.exc import IntegrityError, DataError
 
 def create_app():
     app = Flask(__name__)
@@ -20,6 +21,14 @@ def create_app():
     @app.errorhandler(ValidationError)
     def validation_error(err):
         return {'Error': err.messages}, 400
+    
+    @app.errorhandler(400)
+    def bad_request(err):
+        return {'Error': str(err)}, 400
+    
+    @app.errorhandler(404)
+    def not_found(err):
+        return {'Error': str(err)}, 404
 
     db.init_app(app)
     ma.init_app(app)
