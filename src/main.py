@@ -5,6 +5,8 @@ from controllers.cli_controller import db_commands
 from controllers.auth_controller import auth_bp
 from controllers.content_controllers import content_bp
 from controllers.review_controllers import reviews_bp
+from controllers.category_controller import category_bp
+from controllers.author_controller import author_bp
 
 def create_app():
     app = Flask(__name__)
@@ -23,5 +25,7 @@ def create_app():
     app.register_blueprint(auth_bp)
     app.register_blueprint(content_bp)
     app.register_blueprint(reviews_bp)
+    app.register_blueprint(category_bp)
+    app.register_blueprint(author_bp)
 
     return app

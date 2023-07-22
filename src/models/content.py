@@ -8,7 +8,7 @@ class Content(db.Model):
     title = db.Column(db.String)
     genre = db.Column(db.String)
     description = db.Column(db.Text)
-    published = db.Column(db.String)
+    published = db.Column(db.Date)
     publisher = db.Column(db.String)
 
     author_id = db.Column(db.Integer, db.ForeignKey('authors.id'), nullable=False)

@@ -10,9 +10,9 @@ class Category(db.Model):
     content = db.relationship('Content', back_populates='category')
 
 class CategorySchema(ma.Schema):
+    content = fields.Nested('ContentSchema', many=True) 
     class Meta:
         fields = ('id', 'category', 'content')
 
 category_schema = CategorySchema()
-categorys_schema = CategorySchema(many=True)
-    
+categories_schema = CategorySchema(many=True)
