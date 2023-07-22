@@ -1,4 +1,3 @@
-# Imports for this file
 from flask import Blueprint, request
 from init import db
 from models.user import User
@@ -16,9 +15,6 @@ def authorise_admin():
     is the admin. It retrieves the user from the database based on
     the user ID from the JWT token. It returns a boolean value
     indicating whether the user is an admin.
-
-    Parameters:
-        None.
 
     Returns:
         bool: True if the current user is an admin, False otherwise.
@@ -38,9 +34,6 @@ def get_all_content():
     Route for retrieving all content.
 
     This route retrieves a list of all content from the database and returns it as JSON.
-
-    Parameters:
-        None
 
     Returns:
         A list of all content as JSON objects with HTTP status code 200 (OK).
@@ -83,9 +76,6 @@ def create_content():
     details such as title, genre, description, published date, publisher, 
     category ID, and author ID.
 
-    Parameters:
-        None.
-
     Returns:
         The created content as a JSON object with HTTP status code 201 (Created) 
         if the current user is an admin and the content is successfully created.
@@ -96,7 +86,7 @@ def create_content():
         An error message as a JSON object with HTTP status code 400 (Bad Request) 
         if the request JSON is missing required fields or contains invalid category or author IDs.
     """
-    json_data = request.get_json()
+    json_data = content_schema.load(request.get_json())
     is_admin = authorise_admin()
     if not is_admin:
         return {'Error': 'You must be an admin to create content.'}, 403

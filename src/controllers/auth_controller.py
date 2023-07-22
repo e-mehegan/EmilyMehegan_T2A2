@@ -1,4 +1,3 @@
-# Imports for the file
 from flask import Blueprint, request
 from init import db, bcrypt
 from models.user import User, user_schema, users_schema

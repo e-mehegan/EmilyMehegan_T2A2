@@ -1,4 +1,3 @@
-# Imports for this file
 from flask import Blueprint, request
 from init import db
 from models.user import User
@@ -87,7 +86,7 @@ def create_category():
     Raises:
         403 Forbidden: If the user making the request is not an admin, an error message is returned.
     """
-    json_data = request.get_json()
+    json_data = category_schema.load(request.get_json())
     is_admin = authorise_admin()
     if not is_admin:
         return {'Error': 'You must be an admin to create a new category.'}, 403
@@ -138,12 +137,32 @@ def delete_one_category(id):
         db.session.commit()
         return {'Message': f'Category {category} has been deleted successfully.'}
     else: 
+        # Return an error message if the input ID is not found
         return {'Error': f'Category with the id {id} does not exist.'}, 404
     
 
 @category_bp.route('/<int:id>', methods=['PUT', 'PATCH'])
 @jwt_required()
 def update_one_category(id):
+    """
+    Route for updating a category by ID.
+
+    This function allows adminis to update a category's information in the database based on the provided ID.
+
+    Args:
+        id (int): The ID of the category to be updated.
+
+    Returns:
+        dict: A dictionary containing the updated information of the category if successful.
+
+    Raises:
+        403 Forbidden: If the user making the request is not an admin, an error message is returned.
+        404 Not Found: If the category with the given ID does not exist, an error message is returned.
+
+    Note:
+        The function expects the updated category information in the request JSON, and it performs a partial update.
+        If a field is not provided in the request JSON, the existing value in the database for that field will be retained.
+    """
     json_data = category_schema.load(request.get_json(), partial=True)
     stmt = db.select(Category).filter_by(id=id)
     category = db.session.scalar(stmt)
