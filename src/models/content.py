@@ -1,5 +1,7 @@
 from init import db, ma
 from marshmallow import fields
+from marshmallow.validate import Length, And, Regexp
+
 
 class Content(db.Model):
     __tablename__ = "content"
@@ -22,6 +24,10 @@ class ContentSchema(ma.Schema):
     reviews = fields.Nested('ReviewSchema', exclude=['id'])
     author = fields.Nested('AuthorSchema')
     category = fields.Nested('CategorySchema')
+
+    description = fields.String(required=True, validate=And(Length(min=10, error='Description must be at least 10 characters long'),
+                                                            Regexp('^[a-zA-Z0-9 ]+$', error='Only letters, spaces and numbers are allowed')
+                                                            ))   
 
     class Meta:
         fields = ('id', 'title', 'genre', 'description', 'published', 'publisher')

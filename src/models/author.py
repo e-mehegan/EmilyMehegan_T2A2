@@ -11,8 +11,10 @@ class Author(db.Model):
 
 class AuthorSchema(ma.Schema):
     content = fields.Nested('ContentSchema', many=True) 
+
     class Meta:
         fields = ('id', 'author', 'content')
+        ordered = True
 
 author_schema = AuthorSchema()
 authors_schema =AuthorSchema(many=True)
