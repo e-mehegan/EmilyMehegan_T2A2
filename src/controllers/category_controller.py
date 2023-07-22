@@ -75,6 +75,18 @@ def get_one_category(id):
 @category_bp.route('/', methods=['POST'])
 @jwt_required()
 def create_category():
+    """
+    Route for creating a new category.
+
+    This function allows adminis to create a new category by extracting the category data from the request JSON
+    and adding it to the database.
+
+    Returns:
+        dict: A dictionary containing the details of the newly created category if successful.
+
+    Raises:
+        403 Forbidden: If the user making the request is not an admin, an error message is returned.
+    """
     json_data = request.get_json()
     is_admin = authorise_admin()
     if not is_admin:
@@ -97,6 +109,22 @@ def create_category():
 @category_bp.route('/<int:id>', methods=['DELETE'])
 @jwt_required()
 def delete_one_category(id):
+    """
+    Route for deleting a category by ID.
+
+    This function allows adminis to delete a category from the database based on the provided ID.
+
+    Args:
+        id (int): The ID of the category to be deleted.
+
+    Returns:
+        dict: A dictionary containing the result of the operation.
+              If the category is successfully deleted, it returns a message confirming the deletion.
+
+    Raises:
+        403 Forbidden: If the user making the request is not an admin, an error message is returned.
+        404 Not Found: If the category with the given ID does not exist, an error message is returned.
+    """
     # Check authorization, if not admin return an error
     admin_status = authorise_admin()
     if not admin_status:
