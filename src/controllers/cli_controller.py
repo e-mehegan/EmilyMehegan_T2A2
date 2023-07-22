@@ -1,4 +1,3 @@
-# Imports for the file
 from flask import Blueprint
 from init import db, bcrypt
 from datetime import date, datetime

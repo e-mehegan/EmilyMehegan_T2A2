@@ -1,4 +1,3 @@
-# Imports for the file
 from flask import Blueprint, request
 from init import db
 from models.user import User
@@ -135,6 +134,7 @@ def delete_one_author(id):
         db.session.commit()
         return {'Message': f'Author has been deleted successfully.'}
     else: 
+        # Return an error message if the input ID is not found
         return {'Error': f'Author with the id {id} does not exist.'}, 404 
     
 

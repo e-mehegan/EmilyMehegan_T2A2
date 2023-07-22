@@ -1,4 +1,3 @@
-# Imports for this file
 from flask import Blueprint, request
 from init import db
 from models.user import User
@@ -138,6 +137,7 @@ def delete_one_category(id):
         db.session.commit()
         return {'Message': f'Category {category} has been deleted successfully.'}
     else: 
+        # Return an error message if the input ID is not found
         return {'Error': f'Category with the id {id} does not exist.'}, 404
     
 
