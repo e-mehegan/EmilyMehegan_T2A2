@@ -13,9 +13,8 @@ class Category(db.Model):
 class CategorySchema(ma.Schema):
     content = fields.Nested('ContentSchema', many=True) 
 
-    category = fields.String(required=True, validate=And(Length(min=10, error='Description must be at least 10 characters long'),
-                                                            Regexp('^[a-zA-Z0-9 ]+$', error='Only letters, spaces and numbers are allowed')
-                                                            ))
+    category = fields.String (required=True)
+
     class Meta:
         fields = ('id', 'category', 'content')
         ordered = True
