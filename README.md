@@ -418,6 +418,8 @@ Raises:
 
 ## R7 - Detail any third party services that your app will use
 
+The main third party services that are used/needed to build the application are bcrypt, JWT, Psycopg, Marshmallow and SQLAlchemy. Each where used extensively in the development process in order to create a functional API application and work with the database.
+
 ### bcrypt
 
 Bcrypt is a cryptographic hashing algorithm used for hashing passwords and other personal/sensitive data. It is popular for storing passwords in databases securely as it uses multiple security features in order to prevent and avoid cyber attacks such as brute-force attacks.
@@ -507,6 +509,73 @@ Whenever a user logs in or a server needs to generate a JWT, it will construct t
 <u>TOKEN VERIFICATION:</u>
 
  To verify a received JWT, the server first decodes the base64-encoded segments to retrieve the header and payload. It then recalculates the signature using the same algorithm and secret key. If the recalculated signature matches the one in the JWT, the token is considered valid.
+
+<br>
+
+### Psycopg
+
+Psycopg is a Python library that provides a PostgreSQL adapter for connecting to and working with PostgreSQL databases. It is used to communicate and interact with Python applications that use PostgreSQL databases.
+
+<u>KEY FEATURES:</u>
+
+Psycopg's main feature is its ability to work as an adapter for PostgreSQL to communicate between Python applications and PostgreSQL databases. The thread safety feature allows multiple threads to be  able to use the same connection without conflicts occurring. Python objects and data types are handled as it automatically converts them to and from PostgreSQL data types. Parameterized queries are supported and they prevent SQL injection attacks while also improving performance by reusing query plans.
+
+
+<u>ADVANTAGES:</u>
+
+	- Large list of PostgreSQL features for support, which includes advanced data types. 
+	- Fast and efficient implementation in C, which supports high-performing applications.
+	- Error handling is also included as it raises exceptions during connection or query execution in order to handle errors.
+	
+
+<u>WEAKNESSES:</u>
+
+	- It is only designed for PostgreSQL databases, which doesn't make it suitable for other DBMS.
+	- Some expense issues for establishing database connections. 
+
+<br>
+
+### Marshmallow:
+
+Marshmallow is used in web applications and APIs as it validates input data and makes it into a format which is suitable for storage or transmission. It converts data types to and from native data types making it a popular and powerful Python library.
+
+<u>KEY FEATURES:</u>
+
+Main features and advantages include serialization, deserialization, validation, nested schemas and integration with web frameworks. Serialization allows for defining serialization schemas which specifies how data structures should be converted into JSON format. Through deserialization it allows for specifying incoming data such as JSON and how it should convert into native Python data types. Validation is used to define rules and constraints for fields in the schema. This allows for errors to be raised if data doesn't meet specified criteria. Nested schemas allow for serialized and deserialized nested data structures while integration with frameworks such as Flask allow for easier building of web applications and APIs.
+
+
+<u>WEAKNESSES:</u>
+
+Marshmallow may include a learning curve for some, especially when it comes to complex data structures.
+
+<br>
+
+### SQLAlchemy
+
+SQLAlchemy is a Python SQL toolkit and ORM. It is used to interact with a relational database using Python.
+
+<u>KEY FEATURES:</u>
+
+The main features and advantages of SQLAlchemy are it SQL expression language which provides a way to interact with a database using SQL expressions to perform CRUD operations. The ORM component allows for mapping of Python classes to the database tables. It works well with multiple database engines such as PostgreSQL which was used in this application. This provides flexibility for switching between database engine without changing application code. It allows for committing or rollback changes to a database and optimises database quires. 
+
+<u>WEAKNESSES:</u>
+
+	- Similar to Marshmallow can it can require a learning curve, especially with the ORM component.
+
+<br>
+<br>
+
+Other important packages that where installed to enable the app to run are blinker, click, Jinja2, python dotenv and Wrkzeug.
+
+Blinker: Allows communication between different parts of the application. 
+
+Click: Package that creates command-line interface (CLIs) with easy-to-use syntax
+
+Jinja2: Template engine that is used to generate dynamic content in web apps.
+
+Python dotenv: Loads environment variablles from a .env file into the application's environment.
+
+Wrkzeug: Used for Web Server Gateway Interface applications to handle HTTP requests and responses in Flask.
 
 <br>
 <br>
