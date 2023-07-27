@@ -745,9 +745,13 @@ This process is also done for the code requirement list to ensure that all crite
 
 <b>WEEK ONE</b>
 ![WEEK 1 SS](/docs/Screenshot%202023-07-13%20at%206.49.50%20pm.png)
+- This was the end of week one with everything that has been completed, what was in progress and tasks that still needed to be completed.
 
 <b>WEEK TWO</b>
 ![WEEK 2 SS](/docs/Screenshot%202023-07-22%20at%201.33.35%20pm.png)
+- This was the end of week two with everything that has been completed, what was in progress and tasks that still needed to be completed.
 
 <b>WEEK THREE</b>
+![WEEK 3 SS](/docs/Screenshot%202023-07-27%20at%201.17.41%20pm.png)
 
+-  This was the end of Week 3 with everything completed and ready for submission
