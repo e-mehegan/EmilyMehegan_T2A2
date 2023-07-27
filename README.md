@@ -14,7 +14,7 @@ The idea for this application came from looking at other apps such as 'Good Read
 
 This would be marketed for anyone who reads any type of content. This means that people who don't enjoy reading for leisure but need to find reviews on thesis', essays or research papers that they would need for an assignment or to reference in their own paper would have reviews and descriptions. By having an application that provides reviews, ratings and descriptions for content such as these would be extremely useful for many people. This means that all this information and reviews can be kept on one application instead of having to find reviews in multiple places. 
  
-Users would be able to search the type of content they wish such as manga, books, articles, research papers etc. This makes it a diverse platform for all types of people from leisure readers to students completing an assignment. With these ideas implemented, it will help solve the problem of multiple application usage and aid user in organisation for their book reviews and management all in one application.  
+Users would be able to search the type of content they wish such as manga, books, articles, research papers etc. This makes it a diverse platform for all types of people from leisure readers to students completing an assignment. With these ideas implemented, it will help solve the problem of multiple application usage and aid the user in organisation for their book reviews and management all in one application.  
 
 <br>
 
@@ -24,13 +24,13 @@ The database I have chosen to use is a relational database using PostgreSQL for 
 
 One of the main reasons for choosing PostgreSQL is its support of writing database functions using the primary lanaguages that will be used and implemented in the API webserver, which includes SQL and Python. PostgreSQL has great support with database primitives such as numeric, Boolean and string which are used to build the application. Its support for JSON also makes it a viable choice for working with the relational data in the system since JSON will be implemented when building and creating this application. Having the ability to define my own types and transmitting the data for the web application will aid in the development of my database and structuring the data. 
 
-Authentication, access control and secuirty are important for any application. PostgreSQL has a robust system to be able to appropiatly and effciently handle these aspects. These authentication and authorization functionalities are crucial when dealing with user's personal data. PostgreSQL offers authentication methods, role-based access control, encryption and access permissions. These are all aspects that are crucial in providing a safe environment for your user's data by aiding in building a secure and safe application. 
+Authentication, access control and secuirty are important for any application. PostgreSQL has a robust system to be able to appropriately and effciently handle these aspects. These authentication and authorization functionalities are crucial when dealing with user's personal data. PostgreSQL offers authentication methods, role-based access control, encryption and access permissions. These are all aspects that are crucial in providing a safe environment for your user's data by aiding in building a secure and safe application. 
 
 One of the other features that PostgreSQL provides in the ability to define inheritance relationships between tables and add comments. Table inheritance allows for more manageable indexes and speeds up searches in the database. Changes are then easier to make as only the parent table will need to be changed for a cascade effect on the other tables instead of having to do in individually. These smaller indexes allow for easier reading and organisation, making a valuable feature for managing and organising the database. The ability to be able to add comments on database objects aid in organisation and management of data in the application by adding these comments to tables, databases and other database objects. 
 
 PostgreSQL's use of arrays allows for efficient data organization by organizing related data into one single column. This is used to represent a collection of chosen values which simplifies the data model. Compact storage, index support, flexibility, readability and array functions are also other traits that arrays in PostgreSQL offer. Various array functions allow for dynamic operations on the arrays. With multiple array data types that work efficently with ORMs, this allows for easy mapping of array data between the application code and database. 
 
-Its large list of features, reliablitly, performance and community support makes it a suitable choice for creating and building this application. The wide community support promotes a welcoming and well documented platform for PostgreSQL which provides further benfits to using this system. Due to it's popularity in the community ,regualr updates and bug fixes further make it a viable choice for this application. 
+Its large list of features, reliablitly, performance and community support makes it a suitable choice for creating and building this application. The wide community support promotes a welcoming and well documented platform for PostgreSQL which provides further benfits to using this system. Due to it's popularity in the community, regualr updates and bug fixes further make it a viable choice for this application. 
 
 <b><u>What are the drawbacks compared to others?</b></u>
 
@@ -46,7 +46,7 @@ While PostgreSQL offers a wide range of features, its drawbacks in NoSQL feature
 
 ## R4 - Identify and discuss the key functionalities and benefits of an ORM
 
-Object-relational mapping (ORM) aids in simplifying and abstracting complexities when interacting with a relational database. By mapping attributes or properties of objects in the column of database tables, it enables developers to work with the data in an object-oriented manner. By providing CRUD API and a simplified data-model, it provides an easier learning curve for interacting with a database, compared to learning SQL syntax to communicate and manipulate data. ORMs act as bridging between two different paradigms making a popular programming technique. Some popular ORM systems SQLAlchemy and Django.
+Object-relational mapping (ORM) aids in simplifying and abstracting complexities when interacting with a relational database. By mapping attributes or properties of objects in the column of database tables, it enables developers to work with the data in an object-oriented manner. By providing CRUD API and a simplified data-model, it provides an easier learning curve for interacting with a database, compared to learning SQL syntax to communicate and manipulate data. ORMs act as bridging between two different paradigms making a popular programming technique. Some popular ORM systems are SQLAlchemy and Django.
 
 One of the main key functionalities and benefits of an ORM is its ability to allow developers to write in their preferred programming language instead of SQL to manipulate data and schemas in a database. A developer can use a programming language that they work well with to work on a database instead of using SQL, providing flexibility and speed for developers. The ability to speed up production is due to not having to write multiple syntax from different languages to manage and manipulate data in the database. This subtracts dealing with low-level database operations and SQL queries by interacting directly with an object in the database instead of through SQL. 
 
@@ -284,6 +284,7 @@ Returns:
 	- Dictionary containing the details of the newly created category if successful.
 	
 Raises:
+
 	- 403 Forbidden: If the user making the request is not an admin, an error message is returned.
 
 <br>
@@ -298,8 +299,8 @@ Raises:
 Returns:
 
 		○ Dictionary containing result of the operation:
-			§ If category is successfully deleted, it returns a message confirming the deletion.
-			§ If  category with  given ID does not exist, it returns an error message with status 404.
+			- If category is successfully deleted, it returns a message confirming the deletion.
+			- If  category with  given ID does not exist, it returns an error message with status 404.
 			
 Raises:
 
