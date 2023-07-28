@@ -419,7 +419,7 @@ Raises:
 
 ## R7 - Detail any third party services that your app will use
 
-The main third party services that are used/needed to build the application are bcrypt, JWT, Psycopg, Marshmallow and SQLAlchemy. Each where used extensively in the development process in order to create a functional API application and work with the database.
+The main third party services that are used/needed to build the application are bcrypt, JWT, Psycopg, Marshmallow, SQLAlchemy and FLask. Each where used extensively in the development process in order to create a functional API application and work with the database. 
 
 ### bcrypt
 
@@ -502,15 +502,6 @@ Signature
 	- Is created by hashing the header and payload with a secret key which are using the algorithm specified in the headers.
 
 
-<u>TOKEN CREATION:</u>
-
-Whenever a user logs in or a server needs to generate a JWT, it will construct the header and payload. Then, it calculates the signature by hashing the concatenated header and payload with a secret key. The final JWT is the concatenation of the base64-encoded header, payload, and signature.
-
-
-<u>TOKEN VERIFICATION:</u>
-
- To verify a received JWT, the server first decodes the base64-encoded segments to retrieve the header and payload. It then recalculates the signature using the same algorithm and secret key. If the recalculated signature matches the one in the JWT, the token is considered valid.
-
 <br>
 
 ### Psycopg
@@ -540,7 +531,7 @@ Psycopg's main feature is its ability to work as an adapter for PostgreSQL to co
 
 Marshmallow is used in web applications and APIs as it validates input data and makes it into a format which is suitable for storage or transmission. It converts data types to and from native data types making it a popular and powerful Python library.
 
-<u>KEY FEATURES:</u>
+<u>KEY FEATURES AND ADVANTAGES:</u>
 
 Main features and advantages include serialization, deserialization, validation, nested schemas and integration with web frameworks. Serialization allows for defining serialization schemas which specifies how data structures should be converted into JSON format. Through deserialization it allows for specifying incoming data such as JSON and how it should convert into native Python data types. Validation is used to define rules and constraints for fields in the schema. This allows for errors to be raised if data doesn't meet specified criteria. Nested schemas allow for serialized and deserialized nested data structures while integration with frameworks such as Flask allow for easier building of web applications and APIs.
 
@@ -555,13 +546,29 @@ Marshmallow may include a learning curve for some, especially when it comes to c
 
 SQLAlchemy is a Python SQL toolkit and ORM. It is used to interact with a relational database using Python.
 
-<u>KEY FEATURES:</u>
+<u>KEY FEATURES AND ADVANTAGES:</u>
 
 The main features and advantages of SQLAlchemy are it SQL expression language which provides a way to interact with a database using SQL expressions to perform CRUD operations. The ORM component allows for mapping of Python classes to the database tables. It works well with multiple database engines such as PostgreSQL which was used in this application. This provides flexibility for switching between database engine without changing application code. It allows for committing or rollback changes to a database and optimises database quires. 
 
 <u>WEAKNESSES:</u>
 
 	- Similar to Marshmallow can it can require a learning curve, especially with the ORM component.
+
+<br>
+
+### Flask
+
+Flask is used to develop web applications that use Python making it flexible and easy to use.
+
+<u>KEY FEATURES AND ADVANTAGES:</u>
+
+The main features of Flask include routing, HTTP request and response handling, testing support, Flask CLI and an integrated development server. A built-in URL routing system enables the web application to handle different HTTP methods such as GET. It also provides methods for handling these HTTP requests and generates HTTP responses. Unit testing is included  to make it easier for developers to write tests which is crucial for any application. Its CLI capabilities manage multiple aspects of the application. This includes creating database tables and running a development server which is extensively used when building the application to test and debug. This provides convenience as there is no need to use an external server.
+
+<u>WEAKNESSES:</u>
+
+	- Have to manually install external libraries
+	- Not suited for large applications
+	- Scaling issues
 
 <br>
 <br>
