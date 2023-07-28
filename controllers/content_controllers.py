@@ -1,14 +1,11 @@
 from flask import Blueprint, request, jsonify
 from init import db, ma
-from models.user import User
 from models.content import Content, content_schema, contents_schema
 from models.author import Author
 from models.category import Category
-from flask_jwt_extended import get_jwt_identity, jwt_required
+from flask_jwt_extended import jwt_required
 from controllers.author_controller import authorise_admin
 from datetime import datetime
-from marshmallow import ValidationError
-
 
 
 # Blueprint for content routes
