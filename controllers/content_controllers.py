@@ -6,6 +6,7 @@ from models.author import Author
 from models.category import Category
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from controllers.author_controller import authorise_admin
+from datetime import datetime
 
 
 
@@ -70,31 +71,39 @@ def create_content():
 
         An error message as a JSON object with HTTP status code 400 (Bad Request) 
         if the request JSON is missing required fields or contains invalid category or author IDs.
+
+        An error message as a JSON object with HTTP status code 400 (Bad Request)
+        if the request JSON has an invalid format for published date.
     """
-    json_data = content_schema.load(request.get_json())
+    body_data = request.get_json()
+    category_id = body_data.get('category_id')
+    author_id = body_data.get('author_id')
 
     # Extract content data from the request JSON
-    title = json_data.get('title')
-    genre = json_data.get('genre')
-    description = json_data.get('description')
-    published = json_data.get('published')
-    publisher = json_data.get('publisher')
+    title = body_data.get('title')
+    genre = body_data.get('genre')
+    description = body_data.get('description')
+    publisher = body_data.get('publisher')
 
-    category_id = json_data.get('category_id')
-    author_id = json_data.get('author_id')
     # Check if both category_id and author_id are provided, if not return an error
     if not category_id or not author_id:
         return {'Error': 'Both category_id and author_id must be provided when creating content.'}, 400
 
     # Retrieve the category and author objects based on the provided IDs
-    category = db.session.query(Category).get(category_id)
-    author = db.session.query(Author).get(author_id)
+    category = Category.query.get(category_id)
+    author = Author.query.get(author_id)
 
-    # Check if the category and author exist in the database, if not return an error
     if not category:
         return {'Error': f'Category with id {category_id} does not exist.'}, 400
     if not author:
         return {'Error': f'Author with id {author_id} does not exist.'}, 400
+
+    # Extract and validate the 'published' date from the request JSON
+    published_date_str = body_data.get('published')
+    try:
+        published_date = datetime.strptime(published_date_str, '%Y-%m-%d').date()
+    except ValueError:
+        return {'Error': 'Invalid date format for: published. Please provide the date in this format: YYYY-MM-DD.'}, 400
 
     # Create new Content object with provided data
     content = Content(
@@ -103,7 +112,7 @@ def create_content():
         author_id=author_id,
         genre=genre,
         description=description,
-        published=published,
+        published=published_date,
         publisher=publisher,
     )
 
