@@ -30,7 +30,7 @@ class ContentSchema(ma.Schema):
                                                             ))   
 
     class Meta:
-        fields = ('id', 'title', 'genre', 'description', 'published', 'publisher')
+        fields = ('id', 'title', 'author_id', 'category_id', 'genre', 'description', 'published', 'publisher')
         ordered = True
 
 content_schema = ContentSchema()

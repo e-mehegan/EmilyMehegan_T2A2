@@ -1,5 +1,5 @@
-from flask import Blueprint, request
-from init import db
+from flask import Blueprint, request, jsonify
+from init import db, ma
 from models.user import User
 from models.content import Content, content_schema, contents_schema
 from models.author import Author
@@ -7,6 +7,7 @@ from models.category import Category
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from controllers.author_controller import authorise_admin
 from datetime import datetime
+from marshmallow import ValidationError
 
 
 
@@ -175,6 +176,9 @@ def update_one_content(id):
         The updated content as a JSON object with HTTP status code 200 (OK) if the 
         content item is found and successfully updated.
 
+        An error message as a JSON object with HTTP status code 400 (Bad Request)
+        if no data is inputed by the admin.
+
         An error message as a JSON object with HTTP status code 403 (Forbidden) 
         if the current user is not an admin.
 
@@ -184,34 +188,38 @@ def update_one_content(id):
         An error message as a JSON object with HTTP status code 400 (Bad Request) 
         if the provided category or author IDs are invalid.
     """
-    json_data = content_schema.load(request.get_json(), partial=True)
-    stmt = db.select(Content).filter_by(id=id)
-    content = db.session.scalar(stmt)
+    json_data = request.get_json()
+    if not json_data:
+        return jsonify({'Error': 'No data provided in the request, please input data to update content!.'}), 400
 
-    if content:
-        # Update content fields if provided, otherwise keep the existing values from database
-        content.title = json_data.get('title', content.title)
-        content.genre = json_data.get('genre', content.genre)
-        content.description = json_data.get('description', content.description)
-        content.published = json_data.get('published', content.published)
+    content_data = content_schema.load(json_data, partial=True)
+    
+    content = Content.query.get(id)
+    if not content:
+        return jsonify({'Error': f'Content with id {id} does not exist.'}), 404
 
-        # Update category and author IDs if provided, and ensure they exist in the database, if not return error
-        category_id = json_data.get('category_id', content.category_id)
-        author_id = json_data.get('author_id', content.author_id)
-        category = db.session.query(Category).get(category_id)
-        author = db.session.query(Author).get(author_id)
-        if not category:
-            return {'Error': f'Category with id {category_id} does not exist.'}, 400
-        if not author:
-            return {'Error': f'Author with id {author_id} does not exist.'}, 400
+    # Update content fields if provided, otherwise keep the existing values from the database
+    content.title = content_data.get('title', content.title)
+    content.genre = content_data.get('genre', content.genre)
+    content.description = content_data.get('description', content.description)
+    content.published = content_data.get('published', content.published)
 
-        # Assign updated category and author objects to the content
-        content.category = category
-        content.author = author
+    # Update category and author IDs if provided, and ensure they exist in the database, if not return an error
+    category_id = content_data.get('category_id', content.category_id)
+    author_id = content_data.get('author_id', content.author_id)
 
-        db.session.commit()
-        # Return the updated content as JSON with HTTP status code 200 (OK), if id doesn't exist return error
-        return content_schema.dump(content)
-    else:
-        return {'Error': f'Content with id {id} does not exist.'}, 404
+    category = Category.query.get(category_id)
+    author = Author.query.get(author_id)
+
+    if not category:
+        return jsonify({'Error': f'Category with id {category_id} does not exist.'}), 400
+    if not author:
+        return jsonify({'Error': f'Author with id {author_id} does not exist.'}), 400
+
+    # Assign updated category and author objects to the content
+    content.category = category
+    content.author = author
+
+    db.session.commit()
+    return content_schema.jsonify(content)
 
