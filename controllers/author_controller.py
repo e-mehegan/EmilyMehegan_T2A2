@@ -3,8 +3,10 @@ from init import db
 from models.user import User
 from models.author import Author, authors_schema, author_schema
 from flask_jwt_extended import get_jwt_identity, jwt_required
+import functools
 
-def authorise_admin():
+
+def authorise_admin(fn):
     """
     Check if the current user is an admin.
 
@@ -18,11 +20,22 @@ def authorise_admin():
 
     Returns:
         bool: True if the current user is an admin, False otherwise.
+        Error will be returned if not admin
     """
-    user_id = get_jwt_identity()
-    stmt = db.select(User).filter_by(id=user_id)
-    user = db.session.scalar(stmt)
-    return user.is_admin
+    @functools.wraps(fn)
+    def wrapper(*args, **kwargs):
+        user_id = get_jwt_identity()
+        try:
+            stmt = db.select(User).filter_by(id=user_id)
+            user = db.session.scalar(stmt)
+            if user.is_admin:
+                return fn(*args, **kwargs)
+            else:
+                return {"Error": "Not authorised, must be admin"}, 403
+        except AttributeError:
+            return {"Error": "Not authorised, must be admin"}, 403
+
+    return wrapper
 
 # Blueprint for author routes
 author_bp = Blueprint('author', __name__, url_prefix='/author')
@@ -70,6 +83,7 @@ def get_one_author(id):
 
 @author_bp.route('/', methods=['POST'])
 @jwt_required()
+@authorise_admin
 def create_author():
     """
     Route for creating a new author.
@@ -83,11 +97,7 @@ def create_author():
     Raises:
         403 Forbidden: If the user making the request is not an admin, an error message is returned.
     """
-    # Check authorization, if not admin return an error
     json_data = request.get_json()
-    is_admin = authorise_admin()
-    if not is_admin:
-        return {'Error': 'You must be an admin to create a new author.'}, 403
 
     # Extract author data from the request JSON
     author = json_data.get('author')
@@ -104,6 +114,7 @@ def create_author():
 
 @author_bp.route('/<int:id>', methods=['DELETE'])
 @jwt_required()
+@authorise_admin
 def delete_one_author(id):
     """
     Route for deleting one author by ID.
@@ -121,11 +132,6 @@ def delete_one_author(id):
     Raises:
         403 Forbidden: If the user making the request is not an admin, it raises an exception.
     """
-    # Check authorization, if not admin return an error
-    admin_status = authorise_admin()
-    if not admin_status:
-        return {'Error': 'You must be an admin to delete a author.'}
-
     stmt = db.select(Author).filter_by(id=id)
     author = db.session.scalar(stmt)
 
@@ -140,6 +146,7 @@ def delete_one_author(id):
 
 @author_bp.route('/<int:id>', methods=['PUT', 'PATCH'])
 @jwt_required()
+@authorise_admin
 def update_one_author(id):
     """
     Route for updating an author by ID.
@@ -164,12 +171,7 @@ def update_one_author(id):
     stmt = db.select(Author).filter_by(id=id)
     author = db.session.scalar(stmt)
 
-    # Check authorization, if not admin return an error
     if author:
-        is_admin = authorise_admin()
-        if not is_admin:
-            return {'Error': 'You must be an admin to edit any authors.'}, 403
-
         # Update author fields if provided, otherwise keep the existing values from database
         author.author = json_data.get('author', author.author)
 

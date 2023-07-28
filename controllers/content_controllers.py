@@ -5,24 +5,8 @@ from models.content import Content, content_schema, contents_schema
 from models.author import Author
 from models.category import Category
 from flask_jwt_extended import get_jwt_identity, jwt_required
+from controllers.author_controller import authorise_admin
 
-
-def authorise_admin():
-    """
-    Check if the current user is an admin.
-
-    This function checks if the current user, identified by the JWT token,
-    is the admin. It retrieves the user from the database based on
-    the user ID from the JWT token. It returns a boolean value
-    indicating whether the user is an admin.
-
-    Returns:
-        bool: True if the current user is an admin, False otherwise.
-    """
-    user_id = get_jwt_identity()
-    stmt = db.select(User).filter_by(id=user_id)
-    user = db.session.scalar(stmt)
-    return user.is_admin
 
 
 # Blueprint for content routes
@@ -68,6 +52,7 @@ def get_one_content(id):
 
 @content_bp.route('/', methods=['POST'])
 @jwt_required()
+@authorise_admin
 def create_content():
     """
     Route for creating new content.
@@ -87,9 +72,6 @@ def create_content():
         if the request JSON is missing required fields or contains invalid category or author IDs.
     """
     json_data = content_schema.load(request.get_json())
-    is_admin = authorise_admin()
-    if not is_admin:
-        return {'Error': 'You must be an admin to create content.'}, 403
 
     # Extract content data from the request JSON
     title = json_data.get('title')
@@ -133,6 +115,7 @@ def create_content():
 
 @content_bp.route('/<int:id>', methods=['DELETE'])
 @jwt_required()
+@authorise_admin
 def delete_one_content(id):
     """
     Route for deleting a single content item by ID.
@@ -152,10 +135,6 @@ def delete_one_content(id):
         An error message as a JSON object with HTTP status code 404 (Not Found) 
         if the content item with the specified ID does not exist.
     """
-    # Check authorization, if not admin return an error
-    admin_status = authorise_admin()
-    if not admin_status:
-        return {'Error': 'You must be an admin to delete content.'}
 
     stmt = db.select(Content).filter_by(id=id)
     content = db.session.scalar(stmt)
@@ -171,6 +150,7 @@ def delete_one_content(id):
 
 @content_bp.route('/<int:id>', methods=['PUT', 'PATCH'])
 @jwt_required()
+@authorise_admin
 def update_one_content(id):
     """
     Route for updating a single content item by its ID.
@@ -199,12 +179,7 @@ def update_one_content(id):
     stmt = db.select(Content).filter_by(id=id)
     content = db.session.scalar(stmt)
 
-    # Check authorization, if not admin return an error
     if content:
-        is_admin = authorise_admin()
-        if not is_admin:
-            return {'Error': 'You must be an admin to edit any content.'}, 403
-
         # Update content fields if provided, otherwise keep the existing values from database
         content.title = json_data.get('title', content.title)
         content.genre = json_data.get('genre', content.genre)
