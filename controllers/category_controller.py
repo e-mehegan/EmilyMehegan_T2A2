@@ -17,9 +17,6 @@ def get_all_categories():
 
     This route retrieves a list of all categories from the database and returns it as JSON.
 
-    Parameters:
-        None
-
     Returns:
         A list of all categories as JSON objects with HTTP status code 200 (OK).
     """
@@ -62,10 +59,10 @@ def create_category():
     and adding it to the database.
 
     Returns:
-        dict: A dictionary containing the details of the newly created category if successful.
+        dict: Dictionary containing the details of the newly created category if successful.
 
     Raises:
-        403 Forbidden: If the user making the request is not an admin, an error message is returned.
+        403 Forbidden: If the user making the request is not an admin, an error message occurs.
     """
     json_data = category_schema.load(request.get_json())
 
@@ -96,12 +93,12 @@ def delete_one_category(id):
         id (int): The ID of the category to be deleted.
 
     Returns:
-        dict: A dictionary containing the result of the operation.
+        dict: Dictionary containing the result of the operation.
               If the category is successfully deleted, it returns a message confirming the deletion.
 
     Raises:
-        403 Forbidden: If the user making the request is not an admin, an error message is returned.
-        404 Not Found: If the category with the given ID does not exist, an error message is returned.
+        403 Forbidden: If the user making the request is not an admin, an error message occurs.
+        404 Not Found: If the category with the given ID does not exist, an error message occurs.
     """
     stmt = db.select(Category).filter_by(id=id)
     category = db.session.scalar(stmt)
@@ -128,15 +125,11 @@ def update_one_category(id):
         id (int): The ID of the category to be updated.
 
     Returns:
-        dict: A dictionary containing the updated information of the category if successful.
+        dict: Dictionary containing updated information of the category if successful.
 
     Raises:
-        403 Forbidden: If the user making the request is not an admin, an error message is returned.
-        404 Not Found: If the category with the given ID does not exist, an error message is returned.
-
-    Note:
-        The function expects the updated category information in the request JSON, and it performs a partial update.
-        If a field is not provided in the request JSON, the existing value in the database for that field will be retained.
+        403 Forbidden: If the user making the request is not an admin, an error message occurs.
+        404 Not Found: If the category with the given ID does not exist, an error message occurs.
     """
     json_data = category_schema.load(request.get_json(), partial=True)
     stmt = db.select(Category).filter_by(id=id)

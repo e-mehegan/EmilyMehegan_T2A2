@@ -19,9 +19,6 @@ def auth_register():
     This route allows users to create a new account by providing their
     details such as first name, last name, email, and password.
 
-    Parameters:
-        None
-
     Returns:
         Serialized user object upon successful registration with HTTP status code 201 (Created).
         Error message with HTTP status code 409 (Conflict) if the email is already in use.
@@ -60,9 +57,6 @@ def auth_login():
 
     This route allows users to log in to their existing account by providing
     their email and password.
-
-    Parameters:
-        None
 
     Returns:
         User email, JWT access token, and admin status when login successful with HTTP status code 200 (OK).

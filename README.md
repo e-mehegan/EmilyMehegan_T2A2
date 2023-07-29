@@ -423,11 +423,11 @@ The main third party services that are used/needed to build the application are 
 
 ### bcrypt
 
-Bcrypt is a cryptographic hashing algorithm used for hashing passwords and other personal/sensitive data. It is popular for storing passwords in databases securely as it uses multiple security features in order to prevent and avoid cyber attacks such as brute-force attacks.
+Bcrypt is a cryptographic hashing algorithm used for hashing passwords and other personal/sensitive data. It is popular for storing passwords in databases securely as it uses multiple security features in order to prevent and avoid cyber attacks such as brute-force attacks. Bcrypt's key features were used in the building of this API application, especially the password hashing to ensure user data is protected from cyber attacks. Below is information on bcrypts key features, advantages, weaknesses and its process, which owuld be used for this application. 
 
 <u>KEY FEATURES:</u>
 
-Bcrypts key features include its adaptive work factor, salting and modularity. It allows for an adjustable work factor which determines the number of iterations the algorithm will perform when hashing a password. When computational power increases, the cost factor can be increased which will slow the hashing process and make it more resource-intensive. This aids in combating brute-force attacks. Salting is adding random data into the password before hashing, preventing repeats of passwords from producing the same hash. This aids in combating rainbow table attacks. Bcrypt is modular and allows for parameters to be adjusted such as the cost factor and salt length. This ensure it can adapt to any secuirty requirement changes made in the future making it flexible. These key features make bcrypt a popular choice for defence against password attacks.
+Bcrypts key features include its adaptive work factor, salting and modularity. It allows for an adjustable work factor which determines the number of iterations the algorithm will perform when hashing a password. When computational power increases, the cost factor can be increased which will slow the hashing process and make it more resource-intensive. This aids in combating brute-force attacks. Salting is adding random data into the password before hashing, preventing repeats of passwords from producing the same hash. This aids in combating rainbow table attacks. Bcrypt is modular and allows for parameters to be adjusted such as the cost factor and salt length. This ensure it can adapt to any secuirty requirement changes made in the future making it flexible. These key features make bcrypt a popular choice for defence against password attacks and why it was choosen for this application.
 
 <u>ADVANTAGES:</u>
 
@@ -457,7 +457,7 @@ After specified rounds, final hash is produced (192 bits). Value is represented 
 
 ### JWT
 
-A JWT (JSON Web Token) is used for authentication and authorization in web applications and APIs. It securely transmits information between parties as a JSON object. They are digitally signed and typically encrypted to ensure integrity.
+A JWT (JSON Web Token) is used for authentication and authorization in web applications and APIs. It securely transmits information between parties as a JSON object. They are digitally signed and typically encrypted to ensure integrity. JWT is heavily used through-out the application to authorize users and admins completing CRUD funtions. This allows the application to run smoothly and contribute to the applications organisation of entities being add, editing or deleted.
 
 <u>KEY FEATURES:</u>
 
@@ -510,7 +510,7 @@ Psycopg is a Python library that provides a PostgreSQL adapter for connecting to
 
 <u>KEY FEATURES:</u>
 
-Psycopg's main feature is its ability to work as an adapter for PostgreSQL to communicate between Python applications and PostgreSQL databases. The thread safety feature allows multiple threads to be  able to use the same connection without conflicts occurring. Python objects and data types are handled as it automatically converts them to and from PostgreSQL data types. Parameterized queries are supported and they prevent SQL injection attacks while also improving performance by reusing query plans.
+Psycopg's main feature is its ability to work as an adapter for PostgreSQL to communicate between Python applications and PostgreSQL databases. The thread safety feature allows multiple threads to be able to use the same connection without conflicts occurring. Python objects and data types are handled as it automatically converts them to and from PostgreSQL data types. Parameterized queries are supported and they prevent SQL injection attacks while also improving performance by reusing query plans.
 
 
 <u>ADVANTAGES:</u>
@@ -590,7 +590,7 @@ Wrkzeug: Used for Web Server Gateway Interface applications to handle HTTP reque
 
 ## R8 - Describe your projects models in terms of the relationships they have with each other
 
-Each of the entities have been given their own models file where relationships have been establish in order to create a functional and organised database with proper relations and connections to entities. The relationships created for the models in the application allow navigation and retrieval od data from the database in order to display content, reviews, author, categories and user information efficiently and correctly. Through the structured data it allows for relevant recommendations of written content, content that can be grouped by category or author and user interaction to create reviews and rate written content.
+Each of the entities have been given their own models file where relationships have been establish in order to create a functional and organised database with proper relations and connections to entities. The relationships created for the models in the application allow navigation and retrieval od data from the database in order to display content, reviews, author, categories and user information efficiently and correctly. Through the structured data it allows for relevant recommendations of written content, content that can be grouped by category or author and user interaction to create reviews and rate the written content.
 
 <br>
 
@@ -607,10 +607,6 @@ The associations that are in the 'User' model are:
 #### One-to-Many (User to Review): 
 
 	- One user can write multiple reviews, while each review is associated with only one user. This is defined by the `reviews` relationship in the `User` model using `back_populates='user'`.
-
-#### One-to-Many (User to Content):
-
-	-  One user can create multiple content items, while each content item is associated with only one user. This is established through the `content` relationship in the `User` model with `back_populates='author'`.
 
 <br>
 
@@ -646,15 +642,15 @@ The associations that are in the 'Content' model are:
 
 #### One-to-Many (Content to Review): 
 
-	- One content item can have multiple reviews, and each review is associated with only one content item. This is established through the `reviews` relationship in the `Content` model with `back_populates='content'`.
+	- One piece of content can have multiple reviews, and each review is associated with only one piece of content. This is established through the `reviews` relationship in the `Content` model with `back_populates='content'`.
 
 #### Many-to-One (Content to Author): 
 
-	- Each content item is created by one author, and each author can create multiple content items. This relationship is defined using the `author_id` field in the `Content` model as a foreign key referencing the `id` field in the `Author` model.
+	- Each piece of content is created by one author, and each author can create multiple piece of content. This relationship is defined using the `author_id` field in the `Content` model as a foreign key referencing the `id` field in the `Author` model.
 
 #### Many-to-One (Content to Category): 
 
-	- Each content item belongs to one category, and each category can have multiple content items. This relationship is established using the `category_id` field in the `Content` model as a foreign key referencing the `id` field in the `Category` model.
+	- Each piece of content belongs to one category, and each category can have multiple pieces of content. This relationship is established using the `category_id` field in the `Content` model as a foreign key referencing the `id` field in the `Category` model.
 
 <br>
 
@@ -670,13 +666,13 @@ The associations that are in the 'Category' model are:
 
 #### One-to-Many (Category to Content): 
 
-	- One category can have multiple pieces of content associated with it, and each content item is associated with only one category. This relationship is defined through the `content` relationship in the `Category` model with `back_populates='category'`.
+	- One category can have multiple pieces of content associated with it, and each piece of content is associated with only one category. This relationship is defined through the `content` relationship in the `Category` model with `back_populates='category'`.
 
 <br>
 
 <u>AUTHOR MODEL</u>
 
-The `Author` model represents authors who create content items (e.g., books, movies, articles).
+The `Author` model represents authors who create the pieces of written content.
 
 The attributes for the 'Author' model are `id` and `author`. 
 
@@ -686,18 +682,18 @@ The associations that are in the 'Author' model are:
 
 #### One-to-Many (Author to Content):
 
-	- One author can have multiple pieces of content, and each  pieces of content is associated with only one author. This relationship is defined through the `content` relationship in the `Author` model with `back_populates='author'`.
+	- One author can have multiple pieces of content, and each piece of content is associated with only one author. This relationship is defined through the `content` relationship in the `Author` model with `back_populates='author'`.
 
 <br>
 
 <u>ASSOCIATIONS</u>
 - When accessing the `reviews` attribute of a `User` object, it can retrieve all the reviews written by one user.
 
-- Through the `content` attribute of a `User` object, you can access all the content items created by that user.
-
 - For `Content` objects, you can access their associated `reviews`, `author`, and `category`.
 
-- The `Author` model, you can retrieve all the content items created by a specific author.
+- The `Author` model, you can retrieve all the piece of content created by a specific author.
+
+- The 'Category' model, you can retrieve all the piece of content relating to a specific category.
 
 <br>
 
@@ -716,25 +712,25 @@ To make sure the database is normalised, creation of clear relationships between
 
 <u><ul><b>DATABASE RELATIONSHIPS</u></ul></b>
 
-For the author and category entities they have a mandatory relationship with the content as they must be included when creating and editing any content. This provides a organised database where a user can search for a category or author and get any related content. The review and content entities don't have a mandatory relationship since it is the users choice as to whether they want to write a review or not, since you can't review or rate something if you haven't read the content. If the user is creating a review and they don't wish to leave a comment about the content then only the rating is NOT NULL, instead of having both NOT NULL and making the user write a comment. Only users can create a review, so someone must create an account to make a review of any content. 
+As shown in the ERD, the author and category entities are foreign keys as they have a mandatory relationship with the content as they must be included when creating and editing any content. This provides a organised database where a user can search for a category or author and get any related content. The review and content entities don't have a mandatory relationship since it is the users choice as to whether they want to write a review or not, since you can't review or rate something if you haven't read the content. If the user is creating a review and they don't wish to leave a comment about the content then only the rating is NOT NULL, instead of having both NOT NULL and making the user write a comment. Only users can create a review, so someone must create an account to make a review of any content. 
 
 ### One-to-Many Relationships:
 
 <u>User and Review</u>
 
-	- Each user can have many reviews. So for any of the content, they are able to write a review. This means that if they wish they can create one review or many reviews. They all write there own reviews.
+	- Each user can have many reviews. So for any of the content, they are able to write a review. This means that if they wish they can create one review or many reviews. They all write there own reviews. The Review table will have 'user_id' as a foreign key to establish the relationship.
 
 <u>Content and Review</u>
 
-	- Each piece of content can receive multiple reviews from multiple users. Each piece of content can have multiple reviews, but each review can be associated with only one piece of content. This is because you can't have one review relate to multiple pieces of content since the content is not the same.
+	- Each piece of content can receive multiple reviews from multiple users. Each piece of content can have multiple reviews, but each review can be associated with only one piece of content. This is because you can't have one review relate to multiple pieces of content since the content is not the same. 'content_id' is a foreign key in the Review table to establish the relationship.
 
 <u>Content and Category</u>
 
-	- Multiple pieces of content can belong in the same category. This makes it easier when searching for written content.
+	- Multiple pieces of content can belong in the same category. This makes it easier when searching for written content. 'category_id' is a foreign key in the Content table to establish the relationship.
 
 <u>Content and Author</u>
 
-    - One author can publish multiple pieces of content. If a user likes an author then they look up all written content that they have written. 
+    - One author can publish multiple pieces of content. If a user likes an author then they look up all written content that they have written. 'author_id' is a foreign key in the Author table to establish the relationship.
 
 <br>
 <br>

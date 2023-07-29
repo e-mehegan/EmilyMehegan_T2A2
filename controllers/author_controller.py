@@ -13,14 +13,12 @@ def authorise_admin(fn):
     This function checks if the current user, identified by the JWT token,
     is the admin. It retrieves the user from the database based on
     the user ID from the JWT token. It returns a boolean value
-    indicating whether the user is an admin.
+    on whether the user is an admin or not
 
-    Parameters:
-        None.
 
     Returns:
         bool: True if the current user is an admin, False otherwise.
-        Error will be returned if not admin
+        Error will be returned if not admin.
     """
     @functools.wraps(fn)
     def wrapper(*args, **kwargs):
@@ -47,9 +45,6 @@ def get_all_authors():
 
     This route retrieves a list of all authors from the database and returns it as JSON.
 
-    Parameters:
-        None
-
     Returns:
         A list of all authors as JSON objects with HTTP status code 200 (OK).
     """
@@ -63,7 +58,7 @@ def get_one_author(id):
     """
     Route for retrieving a single author by their ID.
 
-    This route retrieves a single author from the database based on the provided ID and returns it as JSON.
+    This route retrieves a single author from the database based on the ID and returns it as JSON.
 
     Parameters:
         id (int): The ID of the author to retrieve.
@@ -92,10 +87,10 @@ def create_author():
     and adding it to the database. Only adminis can create a new author.
 
     Returns:
-        dict: A dictionary containing the details of the newly created author if successful.
+        dict: Dictionary containing the details of the created author if successful.
 
     Raises:
-        403 Forbidden: If the user making the request is not an admin, an error message is returned.
+        403 Forbidden: If the user making the request is not an admin, an error message occurs.
     """
     json_data = request.get_json()
 
@@ -126,7 +121,7 @@ def delete_one_author(id):
 
     Returns:
         dict: A dictionary containing the result of the operation.
-              If the author is successfully deleted, it returns a message confirming the deletion.
+              If the author is successfully deleted, it returns a message confirming author has been deleted.
               If the author with the given ID does not exist, it returns an error message with status 404.
 
     Raises:
@@ -157,15 +152,11 @@ def update_one_author(id):
         id (int): The ID of the author to be updated.
 
     Returns:
-        dict: A dictionary containing the updated information of the author if successful.
+        dict: Dictionary containing the updated information of the author if successful.
 
     Raises:
-        403 Forbidden: If the user making the request is not an admin, an error message is returned.
-        404 Not Found: If the author with the given ID does not exist, an error message is returned.
-
-    Note:
-        The function expects the updated author information in the request JSON, and it performs a partial update.
-        If a field is not provided in the request JSON, the existing value in the database for that field will be retained.
+        403 Forbidden: If the user making the request is not an admin, an error message occurs.
+        404 Not Found: If the author with the given ID does not exist, an error message occurs.
     """
     json_data = author_schema.load(request.get_json(), partial=True)
     stmt = db.select(Author).filter_by(id=id)

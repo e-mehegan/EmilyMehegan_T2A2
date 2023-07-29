@@ -13,9 +13,6 @@ def authorize_user():
     This function checks if the current user, identified by the JWT token,
     is authorized to perform a specific action. It retrieves the user's ID from the JWT token.
 
-    Parameters:
-        None.
-
     Returns:
         int: The user's ID if the user is authorized, or None if not authorized.
     """
@@ -33,9 +30,6 @@ def get_all_reviews():
     Route for retrieving all reviews.
 
     This route retrieves a list of all reviews from the database and returns it as JSON.
-
-    Parameters:
-        None
 
     Returns:
         A list of all reviews as JSON objects with HTTP status code 200 (OK).
@@ -76,9 +70,6 @@ def create_review():
 
     This route allows users to create a new review by providing
     details such as content_id, rating and comment.
-
-    Parameters:
-        None.
 
     Returns:
         The created review as a JSON object with HTTP status code 201 (Created) 
@@ -122,7 +113,7 @@ def delete_one_review(id):
     """
     Route for deleting a single review by ID.
 
-    This route allows authorized users (the owners of the review) to delete a review based on its ID.
+    This route allows authorized users (owners of the review) to delete a review based on ID.
 
     Parameters:
         id (int): The ID of the review to be deleted.
@@ -161,8 +152,8 @@ def update_one_review(id):
     """
     Route for updating a single review by its ID.
 
-    This route allows authorized users (the owners of the review) to update the 
-    rating or comment of their review based on its ID.
+    This route allows authorized users (owners of the review) to update the 
+    rating or comment of their review based on ID.
 
     Parameters:
         id (int): The ID of the review to be updated.
