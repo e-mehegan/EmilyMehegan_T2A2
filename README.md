@@ -1,5 +1,8 @@
 # T2A2 API WEBSERVER
 
+## NOTE
+- This is assignment 2 of Term 2 that was completed in the middle of 2023. This is a API webserver project that is designed to be a functioning web server in the relevant programming language that contains valid, functioning code.
+
 <br>
 
 ## R1 - Identification of the problem you are trying to solve by building this particular app.
